@@ -1,0 +1,16 @@
+crappy kdp-like debugger which can be used to inspect kernel after it paniced on 32bit devices.
+
+How to use:
+1) compile "server"
+2) enable serial I/O (for example with kloader and boot args)
+3) map the "server" executable in kernel
+4) fixup serial_getc_ and serial_putc "symbols" manually after mapping
+5) patch panic function to jump to server when executed.
+
+6) make sure iPhone is conected via serial cable and the python client is running.
+If you now cause a kernelpanic the patched panic function will jump to the "debugger"
+and execute.
+Then you can use the python script to read kernelmemory
+
+That's about it, reading memory is pretty much all you can do with this.
+Calling functions is kinda implemented, but most likely won't work if the function relies on the kernel being still alive.
